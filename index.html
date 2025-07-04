@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbería Premium - Reserva tu Turno</title>
+
+    <!-- Tailwind CSS (CDN) para los estilos -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts para un look elegante -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* Estilos personalizados para complementar Tailwind */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #000000;
+            /* Un gris oscuro casi negro */
+        }
+
+        .font-title {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Color de acento (dorado/ambar) */
+        .accent-color {
+            color: #D97706;
+            /* Cambiado a un dorado más oscuro para mejor contraste en fondos claros */
+        }
+
+        .bg-accent {
+            background-color: #D97706;
+        }
+
+        .border-accent {
+            border-color: #D97706;
+        }
+
+        .bg-accent-hover:hover {
+            background-color: #B45309;
+        }
+    </style>
+</head>
+
+<body class="text-white">
+
+    <!-- =========== ENCABEZADO =========== -->
+    <header class="bg-gray-900/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold font-title">Barbería <span class="text-amber-500">Brok</span></a>
+            <nav class="hidden md:flex space-x-8 text-sm items-center">
+                <a href="#servicios" class="hover:text-amber-500 transition-colors">Servicios</a>
+                <a href="#galeria" class="hover:text-amber-500 transition-colors">Galería</a>
+                <a href="#contacto" class="hover:text-amber-500 transition-colors">Contacto</a>
+                <button onclick="openModal()"
+                    class="bg-accent text-white font-bold py-2 px-5 rounded-md hover:bg-accent-hover transition-colors">
+                    RESERVAR TURNO
+                </button>
+            </nav>
+            <button class="md:hidden" onclick="openModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- =========== HERO SECTION =========== -->
+        <section class="h-screen bg-cover bg-center flex items-center justify-center"
+            style="background-image: url('https://images.unsplash.com/photo-1599351523363-2c1b520f781e?q=80&w=1974&auto=format&fit=crop');">
+            <div class="bg-black/60 absolute inset-0"></div>
+            <div class="text-center z-10 p-4">
+                <h1 class="text-5xl md:text-7xl font-bold font-title mb-4">Estilo y Precisión en Cada Corte</h1>
+                <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">La experiencia de una barbería clásica con las
+                    técnicas más modernas.</p>
+                <button onclick="openModal()"
+                    class="bg-accent text-white font-bold py-3 px-8 rounded-md text-lg hover:bg-accent-hover transition-transform transform hover:scale-105">
+                    RESERVAR AHORA
+                </button>
+            </div>
+        </section>
+
+        <!-- =========== SECCIÓN DE SERVICIOS =========== -->
+        <section id="servicios" class="py-20 bg-gray-900">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-title text-center mb-12">Nuestros <span class="text-amber-500">Servicios</span>
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div
+                        class="bg-gray-800 p-8 rounded-lg border border-gray-700 text-center transform hover:-translate-y-2 transition-transform">
+                        <h3 class="text-2xl font-bold mb-2">Corte Clásico</h3>
+                        <p class="text-gray-400 mb-4">45 min · Tijera y máquina</p>
+                        <p class="text-3xl font-bold text-amber-500">$2500</p>
+                    </div>
+                    <div
+                        class="bg-gray-800 p-8 rounded-lg border border-gray-700 text-center transform hover:-translate-y-2 transition-transform">
+                        <h3 class="text-2xl font-bold mb-2">Corte y Barba</h3>
+                        <p class="text-gray-400 mb-4">60 min · Perfilado con navaja</p>
+                        <p class="text-3xl font-bold text-amber-500">$3500</p>
+                    </div>
+                    <div
+                        class="bg-gray-800 p-8 rounded-lg border border-gray-700 text-center transform hover:-translate-y-2 transition-transform">
+                        <h3 class="text-2xl font-bold mb-2">Afeitado Tradicional</h3>
+                        <p class="text-gray-400 mb-4">30 min · Toallas calientes y navaja</p>
+                        <p class="text-3xl font-bold text-amber-500">$2000</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- =========== MODAL DE RESERVA (oculto por defecto) =========== -->
+    <div id="booking-modal" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4">
+        <!-- Contenedor principal del modal que ahora usa Flexbox -->
+        <div class="bg-gray-800 rounded-lg shadow-xl w-full max-w-4xl relative flex overflow-hidden">
+
+            <!-- ====== COLUMNA IZQUIERDA: LOGO (NUEVO) ====== -->
+            <div
+                class="hidden md:flex flex-col items-center justify-center w-1/3 bg-gray-900 p-8 border-r border-gray-700">
+                <!-- Reemplaza la URL en `src` por la de tu propio logo -->
+                <img src="./img/logo.png" alt="Logo de la Barbería" class="w-32 h-32 mb-4">
+                <h2 class="font-title text-3xl text-center">Barbería <span class="text-amber-500">Brok</span></h2>
+                <p class="text-gray-400 text-center mt-2">Tu estilo, nuestra pasión.</p>
+            </div>
+
+            <!-- ====== COLUMNA DERECHA: FORMULARIO ====== -->
+            <div class="w-full md:w-2/3 p-8">
+                <!-- Botón de cerrar -->
+                <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white z-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+
+                <div id="steps-container">
+                    <!-- PASO 1: SELECCIONAR SERVICIO -->
+                    <div id="step-1" class="step">
+                        <h3 class="text-xl font-bold mb-4 text-amber-500">Paso 1: Elige tu servicio</h3>
+                        <div class="space-y-3">
+                            <label
+                                class="flex items-center p-4 bg-gray-700 rounded-md cursor-pointer hover:bg-gray-600">
+                                <input type="radio" name="service" value="Corte Clásico" data-price="2500"
+                                    class="h-5 w-5 text-amber-600 bg-gray-900 border-gray-600 focus:ring-amber-500">
+                                <span class="ml-4 text-lg">Corte Clásico ($2500)</span>
+                            </label>
+                            <label
+                                class="flex items-center p-4 bg-gray-700 rounded-md cursor-pointer hover:bg-gray-600">
+                                <input type="radio" name="service" value="Corte y Barba" data-price="3500"
+                                    class="h-5 w-5 text-amber-600 bg-gray-900 border-gray-600 focus:ring-amber-500">
+                                <span class="ml-4 text-lg">Corte y Barba ($3500)</span>
+                            </label>
+                            <label
+                                class="flex items-center p-4 bg-gray-700 rounded-md cursor-pointer hover:bg-gray-600">
+                                <input type="radio" name="service" value="Afeitado Tradicional" data-price="2000"
+                                    class="h-5 w-5 text-amber-600 bg-gray-900 border-gray-600 focus:ring-amber-500">
+                                <span class="ml-4 text-lg">Afeitado Tradicional ($2000)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- PASO 2: SELECCIONAR FECHA Y HORA -->
+                    <div id="step-2" class="step hidden">
+                        <h3 class="text-xl font-bold mb-4 text-amber-500">Paso 2: Elige fecha y hora</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="date" class="block text-sm font-medium text-gray-300">Fecha</label>
+                                <input type="date" id="date" name="date"
+                                    class="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500 text-white p-2">
+                            </div>
+                            <div>
+                                <label for="time" class="block text-sm font-medium text-gray-300">Hora</label>
+                                <select id="time" name="time"
+                                    class="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500 text-white p-2">
+                                    <option>09:00</option>
+                                    <option>09:45</option>
+                                    <option>10:30</option>
+                                    <option>11:15</option>
+                                    <option>12:00</option>
+                                    <option>15:00</option>
+                                    <option>15:45</option>
+                                    <option>16:30</option>
+                                    <option>17:15</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PASO 3: INGRESAR DATOS -->
+                    <div id="step-3" class="step hidden">
+                        <h3 class="text-xl font-bold mb-4 text-amber-500">Paso 3: Tus datos</h3>
+                        <form id="details-form" class="space-y-4">
+                            <div>
+                                <label for="nombre" class="block text-sm font-medium text-gray-300">Nombre y
+                                    Apellido</label>
+                                <input type="text" id="nombre" name="nombre" placeholder="Juan Perez" required
+                                    class="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500 text-white p-2">
+                            </div>
+                            <!-- ====== CAMPO DE EMAIL (NUEVO) ====== -->
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-300">Email de
+                                    Confirmación</label>
+                                <input type="email" id="email" name="email" placeholder="tu@email.com" required
+                                    class="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500 text-white p-2">
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- PASO 4: CONFIRMACIÓN -->
+                    <div id="step-4" class="step hidden">
+                        <h3 class="text-xl font-bold mb-4 text-amber-500">Paso 4: Revisa y Confirma</h3>
+                        <div class="bg-gray-700 p-4 rounded-md space-y-2 text-lg">
+                            <p><strong>Cliente:</strong> <span id="summary-name"></span></p>
+                            <p><strong>Email:</strong> <span id="summary-email"></span></p>
+                            <hr class="border-gray-600 my-3">
+                            <p><strong>Servicio:</strong> <span id="summary-service"></span></p>
+                            <p><strong>Fecha:</strong> <span id="summary-date"></span></p>
+                            <p><strong>Hora:</strong> <span id="summary-time"></span></p>
+                            <hr class="border-gray-600 my-3">
+                            <p class="text-xl"><strong>Precio Total:</strong> <span id="summary-price"
+                                    class="font-bold"></span></p>
+                        </div>
+                        <button id="confirm-btn" onclick="confirmBooking()"
+                            class="w-full mt-6 bg-accent text-white font-bold py-3 px-4 rounded-md hover:bg-accent-hover transition-colors">
+                            Confirmar Turno
+                        </button>
+                    </div>
+
+                    <!-- PASO 5: TURNO CONFIRMADO (NUEVO) -->
+                    <div id="step-5" class="step hidden text-center p-8">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-green-400 mx-auto mb-4"
+                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <h3 class="text-3xl font-bold mb-2 text-green-400">¡Turno Confirmado!</h3>
+                        <p class="text-gray-300">Hemos enviado los detalles de tu reserva a <strong
+                                id="confirmation-email" class="text-white"></strong>.</p>
+                        <p class="text-gray-400 mt-4">¡Te esperamos!</p>
+                        <button onclick="closeModal()"
+                            class="mt-8 bg-gray-600 text-white font-bold py-2 px-6 rounded-md hover:bg-gray-500 transition-colors">
+                            Cerrar
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- Botones de Navegación -->
+                <div id="navigation-btns" class="mt-8 flex justify-between">
+                    <button id="prev-btn" onclick="prevStep()"
+                        class="bg-gray-600 text-white font-bold py-2 px-6 rounded-md hover:bg-gray-500 transition-colors hidden">
+                        Anterior
+                    </button>
+                    <button id="next-btn" onclick="nextStep()"
+                        class="bg-accent text-white font-bold py-2 px-6 rounded-md hover:bg-accent-hover transition-colors ml-auto">
+                        Siguiente
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- =========== JAVASCRIPT para la interactividad del Modal =========== -->
+    <script>
+        const modal = document.getElementById('booking-modal');
+        const steps = document.querySelectorAll('.step');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const navButtons = document.getElementById('navigation-btns');
+        let currentStep = 0;
+
+        // Datos de la reserva
+        const bookingData = {
+            service: null,
+            price: null,
+            date: null,
+            time: null,
+            name: null,
+            email: null // Nuevo campo
+        };
+
+        function openModal() {
+            modal.classList.add('flex');
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            // Resetear al cerrar para la próxima vez
+            currentStep = 0;
+            showStep(currentStep);
+            document.getElementById('details-form').reset();
+            document.querySelector('input[name="service"]:checked')?.removeAttribute('checked');
+        }
+
+        function showStep(stepIndex) {
+            steps.forEach((step, index) => {
+                step.classList.toggle('hidden', index !== stepIndex);
+            });
+
+            // Lógica de visibilidad de botones
+            navButtons.classList.toggle('hidden', stepIndex >= steps.length - 2); // Ocultar en los últimos 2 pasos (resumen y confirmación)
+            prevBtn.classList.toggle('hidden', stepIndex === 0);
+        }
+
+        function nextStep() {
+            // Validación para cada paso
+            if (currentStep === 0) { // Validar servicio
+                const selectedService = document.querySelector('input[name="service"]:checked');
+                if (!selectedService) {
+                    alert('Por favor, selecciona un servicio.');
+                    return;
+                }
+                bookingData.service = selectedService.value;
+                bookingData.price = selectedService.dataset.price;
+            }
+            if (currentStep === 1) { // Validar fecha y hora
+                const date = document.getElementById('date').value;
+                if (!date) {
+                    alert('Por favor, selecciona una fecha.');
+                    return;
+                }
+                bookingData.date = date;
+                bookingData.time = document.getElementById('time').value;
+            }
+            if (currentStep === 2) { // Validar datos personales
+                const form = document.getElementById('details-form');
+                if (!form.checkValidity()) {
+                    // El navegador mostrará el mensaje de error por los atributos `required` y `type="email"`
+                    form.reportValidity();
+                    return;
+                }
+                bookingData.name = document.getElementById('nombre').value;
+                bookingData.email = document.getElementById('email').value; // Guardar email
+                updateSummary();
+            }
+
+            if (currentStep < steps.length - 1) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+
+        function updateSummary() {
+            document.getElementById('summary-service').textContent = bookingData.service;
+            document.getElementById('summary-date').textContent = new Date(bookingData.date + 'T00:00:00').toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('summary-time').textContent = bookingData.time;
+            document.getElementById('summary-name').textContent = bookingData.name;
+            document.getElementById('summary-email').textContent = bookingData.email; // Mostrar email en el resumen
+            document.getElementById('summary-price').textContent = `$${bookingData.price}`;
+        }
+
+        function confirmBooking() {
+            const confirmBtn = document.getElementById('confirm-btn');
+            confirmBtn.disabled = true;
+            confirmBtn.textContent = 'Confirmando...';
+
+            // --- SIMULACIÓN DE ENVÍO DE EMAIL ---
+            // En una aplicación real, aquí llamarías a un servicio como EmailJS
+            // o enviarías los `bookingData` a tu backend para procesar la reserva y el email.
+            console.log("Enviando confirmación a:", bookingData.email);
+            console.log("Datos de la reserva:", bookingData);
+
+            setTimeout(() => {
+                // Simulación exitosa
+                document.getElementById('confirmation-email').textContent = bookingData.email;
+                currentStep++;
+                showStep(currentStep);
+
+                // Resetear botón para la próxima reserva
+                confirmBtn.disabled = false;
+                confirmBtn.textContent = 'Confirmar Turno';
+            }, 1500); // Simular una espera de 1.5 segundos
+        }
+
+        // Inicializar
+        showStep(currentStep);
+
+        // Asegurarse de que el modal esté oculto al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        });
+    </script>
+</body>
+
+</html>
